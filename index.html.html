@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para ti 💖</title>
+<style>
+html, body { margin:0; padding:0; height:100%; overflow:hidden; font-family:sans-serif; background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%); position:relative; }
+.mensaje { position:absolute; top:20px; width:100%; text-align:center; font-size:2rem; color:#fffacd; text-shadow:0 0 10px #fff,0 0 20px #ff0; z-index:10; }
+.luna { position:absolute; top:80px; left:50%; transform:translateX(-50%); width:120px; height:120px; border-radius:50%; background: radial-gradient(circle,#fff 60%,#f0f0f0 100%); box-shadow:0 0 40px 20px rgba(255,255,200,0.45); z-index:5; }
+.estrella { position:absolute; background:#fff; border-radius:50%; width:2px; height:2px; animation: parp 2s infinite alternate; }
+@keyframes parp { from{opacity:1} to{opacity:0.25} }
+.music-player { position:absolute; top:20px; right:20px; background: rgba(47,27,20,0.75); padding:8px 12px; border-radius:14px; display:flex; gap:10px; align-items:center; z-index:20; }
+.btn-play { background:#ecb500; border:none; border-radius:50%; width:36px; height:36px; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 4px 15px rgba(255,140,0,0.3); }
+.btn-play:active { transform: scale(0.98); }
+.rosa { position:absolute; width:40px; height:40px; background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23ff4d6d" d="M50 0C60 10 70 20 70 35C70 50 50 70 50 70C50 70 30 50 30 35C30 20 40 10 50 0Z"/></svg>'); background-size:contain; background-repeat:no-repeat; animation: caer 4s linear forwards; }
+@keyframes caer { 0%{transform:translateY(0) rotate(0deg) scale(0.6); opacity:1} 100%{transform:translateY(100vh) rotate(360deg) scale(1); opacity:0;} }
+</style>
+</head>
+<body>
+
+<div class="mensaje">🌙✨ Tú eres mi diosa y yo, un mortal, que se enamoró de ti 💕</div>
+<div class="luna"></div>
+
+<!-- Reproductor -->
+<div class="music-player">
+  <button class="btn-play" id="playBtn">▶️</button>
+  <button class="btn-play" id="pauseBtn" style="display:none">⏸️</button>
+</div>
+<iframe id="ytPlayer" width="0" height="0" style="display:none" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+
+<!-- Estrellas -->
+<script>
+for(let i=0;i<100;i++){
+  let s=document.createElement('div'); s.className='estrella';
+  s.style.left=Math.random()*100+'vw'; s.style.top=Math.random()*100+'vh';
+  const size=(Math.random()*2+0.8).toFixed(2);
+  s.style.width=s.style.height=size+'px';
+  s.style.opacity=(0.3+Math.random()*0.7).toFixed(2);
+  s.style.animationDuration=(1+Math.random()*3)+'s';
+  document.body.appendChild(s);
+}
+</script>
+
+<!-- Música de YouTube -->
+<script>
+var tag=document.createElement('script'); tag.src="https://www.youtube.com/iframe_api"; document.body.appendChild(tag);
+var player;
+function onYouTubeIframeAPIReady(){
+  player=new YT.Player('ytPlayer',{videoId:'-DB4ovRXn4k',events:{onReady:onPlayerReady}});
+}
+function onPlayerReady(e){
+  document.getElementById('playBtn').onclick=function(){
+    player.playVideo(); this.style.display='none'; document.getElementById('pauseBtn').style.display='inline';
+  };
+  document.getElementById('pauseBtn').onclick=function(){
+    player.pauseVideo(); this.style.display='none'; document.getElementById('playBtn').style.display='inline';
+  };
+}
+</script>
+
+<!-- Rosas al tocar -->
+<script>
+document.body.addEventListener('click',function(e){
+  const r=document.createElement('div'); r.className='rosa';
+  r.style.left=e.clientX-20+'px'; r.style.top=e.clientY-20+'px';
+  document.body.appendChild(r);
+  setTimeout(()=>r.remove(),4000);
+});
+</script>
+
+</body>
+</html>

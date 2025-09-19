@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sorpresa Mágica</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    background: radial-gradient(circle at top, #0b0c1e, #000010);
+    font-family: Arial, sans-serif;
+    color: white;
+    position: relative;
+  }
+
+  /* Luna */
+  .luna {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, #fff 40%, #ddd 70%, #bbb 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 30px #fff;
+    z-index: 1;
+  }
+
+  /* Estrellas */
+  .estrella {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    width: 2px;
+    height: 2px;
+    opacity: 0.8;
+    animation: parpadeo 2s infinite alternate;
+    z-index: 0;
+  }
+  @keyframes parpadeo {
+    from {opacity:0.2;}
+    to {opacity:1;}
+  }
+
+  /* Flores animadas */
+  .flor {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background-color: pink;
+    border-radius: 50%;
+    animation: brotar 2s forwards;
+    box-shadow: 0 0 10px #ffb3d1;
+    z-index: 2;
+  }
+  @keyframes brotar {
+    0% {transform: scale(0.3); opacity:0.5;}
+    100% {transform: scale(1.6); opacity:0;}
+  }
+
+  /* Mensaje central */
+  .center {
+    position: relative;
+    z-index: 3;
+    height: 100vh;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  h1 {
+    font-size: clamp(24px, 5vw, 48px);
+    text-shadow: 0 0 15px #ff9cca;
+  }
+
+  /* Botón música */
+  .btn-reproducir {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #ff69b4;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  .btn-reproducir:hover {
+    background-color: #ff1493;
+  }
+</style>
+</head>
+<body>
+
+<div class="luna"></div>
+
+<div class="center">
+  <h1>Tú eres mi diosa y yo, un mortal, que se enamoró de ti 💕</h1>
+  <button class="btn-reproducir" onclick="reproducirMusica()">▶ Reproducir música</button>
+</div>
+
+<!-- Estrellas generadas por JS -->
+<script>
+  // Crear 150 estrellas
+  for(let i=0;i<150;i++){
+    let e = document.createElement('div');
+    e.className='estrella';
+    e.style.top = Math.random()*100+'vh';
+    e.style.left = Math.random()*100+'vw';
+    e.style.width = (Math.random()*3+1)+'px';
+    e.style.height = (Math.random()*3+1)+'px';
+    e.style.animationDuration = (1+Math.random()*3)+'s';
+    document.body.appendChild(e);
+  }
+
+  // Crear flores al hacer clic
+  document.addEventListener('click', function(e){
+    for(let i=0;i<6;i++){
+      let f = document.createElement('div');
+      f.className='flor';
+      f.style.left = e.pageX + (Math.random()*50-25)+'px';
+      f.style.top = e.pageY + (Math.random()*50-25)+'px';
+      document.body.appendChild(f);
+      setTimeout(()=>f.remove(),3000);
+    }
+  });
+
+  // Reproducir música YouTube
+  function reproducirMusica(){
+    let yt = document.getElementById('ytPlayer');
+    yt.src += "&autoplay=1";
+  }
+</script>
+
+<!-- Música de YouTube (invisible) -->
+<iframe id="ytPlayer" width="0" height="0" style="display:none"
+src="https://www.youtube.com/embed/-DB4ovRXn4k?loop=1&playlist=-DB4ovRXn4k"
+frameborder="0" allow="autoplay; encrypted-media"></iframe>
+
+</body>
+</html>
